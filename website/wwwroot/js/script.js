@@ -1,17 +1,15 @@
 'use strict';
 
-/**
- * add event listener on multiple elements
- */
+//#region UTILITY FUNCTIONS
 const addEventOnElements = function (elements, eventType, callback) {
     for (let i = 0, len = elements.length; i < len; i++) {
         elements[i].addEventListener(eventType, callback);
     }
 }
+//#endregion
 
-/**
- * NAVBAR
- */
+
+//#region NAVBAR
 const navbar = document.querySelector("[data-navbar]");
 const navTogglers = document.querySelectorAll("[data-nav-toggler]");
 const overlay = document.querySelector("[data-overlay]");
@@ -23,12 +21,11 @@ const toggleNavbar = function () {
 }
 
 addEventOnElements(navTogglers, "click", toggleNavbar);
+//#endregion
 
-/**
- * HEADER & BACK TOP BTN
- */
+
+//#region HEADER
 const header = document.querySelector("[data-header]");
-const backTopBtn = document.querySelector("[data-back-top-btn]");
 
 let lastScrollPos = 0;
 
@@ -45,17 +42,36 @@ const hideHeader = function () {
 window.addEventListener("scroll", function () {
     if (window.scrollY >= 50) {
         header.classList.add("active");
-        backTopBtn.classList.add("active");
         hideHeader();
     } else {
         header.classList.remove("active");
+    }
+});
+//#endregion
+
+
+//#region BACK TO TOP BUTTON
+const backTopBtn = document.querySelector("[data-back-top-btn]");
+
+window.addEventListener("scroll", function () {
+    if (window.scrollY >= 300) {
+        backTopBtn.classList.add("active");
+    } else {
         backTopBtn.classList.remove("active");
     }
 });
 
-/**
- * HERO SLIDER
- */
+backTopBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+//#endregion
+
+
+//#region HERO SLIDER
 const heroSlider = document.querySelector("[data-hero-slider]");
 const heroSliderItems = document.querySelectorAll("[data-hero-slider-item]");
 const heroSliderPrevBtn = document.querySelector("[data-prev-btn]");
@@ -79,8 +95,6 @@ const slideNext = function () {
     updateSliderPos();
 }
 
-heroSliderNextBtn.addEventListener("click", slideNext);
-
 const slidePrev = function () {
     if (currentSlidePos <= 0) {
         currentSlidePos = heroSliderItems.length - 1;
@@ -90,8 +104,10 @@ const slidePrev = function () {
     updateSliderPos();
 }
 
+heroSliderNextBtn.addEventListener("click", slideNext);
 heroSliderPrevBtn.addEventListener("click", slidePrev);
 
+// Auto slide
 let autoSlideInterval;
 
 const autoSlide = function () {
@@ -107,10 +123,10 @@ addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseover", function
 addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseout", autoSlide);
 
 window.addEventListener("load", autoSlide);
+//#endregion
 
-/**
- * PARALLAX EFFECT
- */
+
+//#region PARALLAX EFFEC
 const parallaxItems = document.querySelectorAll("[data-parallax-item]");
 
 let x, y;
@@ -127,3 +143,4 @@ window.addEventListener("mousemove", function (event) {
         parallaxItems[i].style.transform = `translate3d(${x}px, ${y}px, 0px)`;
     }
 });
+//#endregion

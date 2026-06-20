@@ -1,0 +1,60 @@
+@namespace LaPasta.src.Components.Layout.Header
+
+<header class="header @HeaderClass" data-header>
+    <div class="container">
+        <!-- LOGO -->
+        <a href="/" class="logo">
+            <img src="@LogoUrl" width="@LogoWidth" height="@LogoHeight" alt="@LogoAlt">
+        </a>
+
+        <!-- NAVBAR -->
+        <nav class="navbar" data-navbar>
+            <button class="close-btn" aria-label="Fechar menu" data-nav-toggler>
+                <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+            </button>
+
+            <a href="/" class="logo">
+                <img src="@LogoUrl" width="@LogoWidth" height="@LogoHeight" alt="@LogoAlt">
+            </a>
+
+            <ul class="navbar-list">
+                @foreach (var item in NavItems)
+                {
+                    <li class="navbar-item">
+                        <a href="@item.Url" class="navbar-link hover-underline @(item.IsActive ? "active" : "")">
+                            <div class="separator"></div>
+                            <span class="span">@item.Text</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+
+            <div class="text-center">
+                <p class="headline-1 navbar-title">@NavTitle</p>
+                <address class="body-4">
+                    @Address<br>
+                    @City
+                </address>
+                <p class="body-4 navbar-text">@OpeningHours</p>
+                <a href="mailto:@Email" class="body-4 sidebar-link">@Email</a>
+                <div class="separator"></div>
+                <p class="contact-label">@ContactLabel</p>
+                <a href="tel:@PhoneNumber" class="body-1 contact-number hover-underline">
+                    @PhoneNumberFormatted
+                </a>
+            </div>
+        </nav>
+
+        <!-- BOTÃO RESERVAR -->
+        <Button Text1="@BtnText1" Text2="@BtnText2" ButtonClass="@BtnClass" />
+
+        <!-- BOTÃO HAMBURGUER -->
+        <button class="nav-open-btn" aria-label="Abrir menu" data-nav-toggler>
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+            <span class="line line-3"></span>
+        </button>
+
+        <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+</header>

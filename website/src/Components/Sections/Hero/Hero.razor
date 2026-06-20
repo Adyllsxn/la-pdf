@@ -1,0 +1,34 @@
+@namespace LaPasta.src.Components.Sections.Hero
+
+<section class="hero text-center" aria-label="home" id="home">
+    <ul class="hero-slider" data-hero-slider>
+        @foreach (var slide in Slides)
+        {
+            <li class="slider-item @(slide.IsActive ? "active" : "")" data-hero-slider-item>
+                <div class="slider-bg">
+                    <img src="@slide.ImageUrl" width="1880" height="950" alt="" class="img-cover">
+                </div>
+                <p class="label-2 section-subtitle slider-reveal">@slide.Subtitle</p>
+                <h1 class="display-1 hero-title slider-reveal">
+                    @slide.Title
+                </h1>
+                <p class="body-2 hero-text slider-reveal">
+                    @slide.Text
+                </p>
+                <Button Text1="@slide.BtnText" Text2="@slide.BtnText" ButtonClass="btn-primary" />
+            </li>
+        }
+    </ul>
+
+    <button class="slider-btn prev" aria-label="slide to previous" data-prev-btn>
+        <ion-icon name="chevron-back"></ion-icon>
+    </button>
+    <button class="slider-btn next" aria-label="slide to next" data-next-btn>
+        <ion-icon name="chevron-forward"></ion-icon>
+    </button>
+
+    <a href="#reservation" class="hero-btn has-after">
+        <img src="images/hero-icon.png" width="48" height="48" alt="booking icon">
+        <span class="label-2 text-center span">@BookingText</span>
+    </a>
+</section>
