@@ -1,0 +1,44 @@
+<section class="section menu" aria-label="menu-label" id="menu">
+    <div class="container">
+        <p class="section-subtitle text-center label-2">@Subtitle</p>
+        <h2 class="headline-1 section-title text-center">@Title</h2>
+
+        <ul class="grid-list">
+            @foreach (var item in MenuItems)
+            {
+                <li>
+                    <div class="menu-card hover:card">
+                        <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                            <img src="@item.ImageUrl" width="100" height="100" loading="lazy" alt="@item.Name" class="img-cover">
+                        </figure>
+                        <div>
+                            <div class="title-wrapper">
+                                <h3 class="title-3">
+                                    <a href="#" class="card-title">@item.Name</a>
+                                </h3>
+                                @if (!string.IsNullOrEmpty(item.Badge))
+                                {
+                                    <span class="badge label-1">@item.Badge</span>
+                                }
+                                <span class="span title-2">@item.Price</span>
+                            </div>
+                            <p class="card-text label-1">@item.Description</p>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+
+        <p class="menu-text text-center">
+            Durante o inverno, diariamente das <span class="span">19:00</span> às <span class="span">21:00</span>
+        </p>
+
+        <a href="#" class="btn btn-primary">
+            <span class="text text-1">@BtnText</span>
+            <span class="text text-2" aria-hidden="true">@BtnText</span>
+        </a>
+
+        <img src="@Shape2Image" width="921" height="1036" loading="lazy" alt="shape" class="shape shape-2 move-anim">
+        <img src="@Shape3Image" width="343" height="345" loading="lazy" alt="shape" class="shape shape-3 move-anim">
+    </div>
+</section>

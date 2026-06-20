@@ -1,0 +1,33 @@
+@namespace LaPasta.src.Components.Sections.Service
+
+<section class="section service bg-black-10 text-center" aria-label="service">
+    <div class="container">
+        <p class="section-subtitle label-2">@Subtitle</p>
+        <h2 class="headline-1 section-title">@Title</h2>
+        <p class="section-text">@Description</p>
+
+        <ul class="grid-list">
+            @foreach (var item in ServiceItems)
+            {
+                <li>
+                    <div class="service-card">
+                        <a href="#" class="has-before hover:shine">
+                            <figure class="card-banner img-holder" style="--width: 285; --height: 336;">
+                                <img src="@item.ImageUrl" width="285" height="336" loading="lazy" alt="@item.Title" class="img-cover">
+                            </figure>
+                        </a>
+                        <div class="card-content">
+                            <h3 class="title-4 card-title">
+                                <a href="#">@item.Title</a>
+                            </h3>
+                            <a href="#" class="btn-text hover-underline label-2">@item.BtnText</a>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+
+        <img src="images/shape-1.png" width="246" height="412" loading="lazy" alt="shape" class="shape shape-1 move-anim">
+        <img src="images/shape-2.png" width="343" height="345" loading="lazy" alt="shape" class="shape shape-2 move-anim">
+    </div>
+</section>

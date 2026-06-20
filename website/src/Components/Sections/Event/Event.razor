@@ -1,0 +1,31 @@
+@namespace LaPasta.src.Components.Sections.Event
+
+<section class="section event bg-black-10" aria-label="event">
+    <div class="container">
+        <p class="section-subtitle label-2 text-center">@Subtitle</p>
+        <h2 class="section-title headline-1 text-center">@Title</h2>
+
+        <ul class="grid-list">
+            @foreach (var item in EventItems)
+            {
+                <li>
+                    <div class="event-card has-before hover:shine">
+                        <div class="card-banner img-holder" style="--width: 350; --height: 450;">
+                            <img src="@item.ImageUrl" width="350" height="450" loading="lazy" alt="@item.AltText" class="img-cover">
+                            <time class="publish-date label-2" datetime="@item.Date">@item.Date</time>
+                        </div>
+                        <div class="card-content">
+                            <p class="card-subtitle label-2 text-center">@item.Category</p>
+                            <h3 class="card-title title-2 text-center">@item.TitleText</h3>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+
+        <a href="#" class="btn btn-primary">
+            <span class="text text-1">@BtnText</span>
+            <span class="text text-2" aria-hidden="true">@BtnText</span>
+        </a>
+    </div>
+</section>
