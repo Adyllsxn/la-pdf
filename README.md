@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/logo.svg" alt="La Pasta Logo" width="30%" /> 
+  <img src="./assets/logo.svg" alt="La Pasta Logo" width="40%" /> 
   </br> </br>
   
   [![GitHub](https://img.shields.io/badge/github-la--pasta-181717?style=for-the-badge&logo=github)](https://github.com/Adyllsxn/la-pasta)

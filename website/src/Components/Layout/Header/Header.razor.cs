@@ -10,8 +10,8 @@ public partial class Header : ComponentBase
 
     // Logo
     public string LogoUrl { get; set; } = "images/logo.svg";
-    public string LogoWidth { get; set; } = "45";
-    public string LogoHeight { get; set; } = "20";
+    public string LogoWidth { get; set; } = "140";
+    public string LogoHeight { get; set; } = "60";
     public string LogoAlt { get; set; } = "La Pasta - Início";
 
     // Classe do Header (scroll)
