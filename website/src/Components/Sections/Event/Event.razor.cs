@@ -10,9 +10,9 @@ public partial class Event : ComponentBase
 
     public List<EventItem> EventItems { get; set; } = new()
     {
-        new EventItem { ImageUrl = "images/event-1.jpg", Date = "15/09/2022", Category = "Comida, Sabor", TitleText = "Sabor tão bom que vai querer comer com os olhos.", AltText = "Event" },
-        new EventItem { ImageUrl = "images/event-2.jpg", Date = "08/09/2022", Category = "Comida Saudável", TitleText = "Sabor tão bom que vai querer comer com os olhos.", AltText = "Event" },
-        new EventItem { ImageUrl = "images/event-3.jpg", Date = "03/09/2022", Category = "Receita", TitleText = "Sabor tão bom que vai querer comer com os olhos.", AltText = "Event" }
+        new EventItem { ImageUrl = "images/event-1.jpg", Date = "15/06/2026", Category = "Comida, Sabor", TitleText = "Sabor tão bom que vai querer comer com os olhos.", AltText = "Event" },
+        new EventItem { ImageUrl = "images/event-2.jpg", Date = "08/06/2026", Category = "Comida Saudável", TitleText = "Sabor tão bom que vai querer comer com os olhos.", AltText = "Event" },
+        new EventItem { ImageUrl = "images/event-3.jpg", Date = "03/06/2026", Category = "Receita", TitleText = "Sabor tão bom que vai querer comer com os olhos.", AltText = "Event" }
     };
 }
 

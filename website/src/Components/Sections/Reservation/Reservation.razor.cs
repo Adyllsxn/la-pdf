@@ -21,9 +21,9 @@ public partial class Reservation : ComponentBase
     public string LocationLabel { get; set; } = "Localização";
     public string Address { get; set; } = "Talatona, Luanda - Angola";
     public string LunchLabel { get; set; } = "Almoço";
-    public string LunchHours { get; set; } = "Segunda a Domingo<br>11:00 - 14:30";
+    public MarkupString LunchHours { get; set; } = (MarkupString)"Segunda a Domingo<br>11:00 - 14:30";
     public string DinnerLabel { get; set; } = "Jantar";
-    public string DinnerHours { get; set; } = "Segunda a Domingo<br>18:00 - 23:00";
+    public MarkupString DinnerHours { get; set; } = (MarkupString)"Segunda a Domingo<br>18:00 - 23:00";
 
     public List<SelectOption> PersonOptions { get; set; } = new()
     {

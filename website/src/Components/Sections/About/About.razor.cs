@@ -6,7 +6,7 @@ public partial class About : ComponentBase
 {
     public string Subtitle { get; set; } = "Nossa História";
     public string Title { get; set; } = "Cada Sabor Conta uma História";
-    public string Description { get; set; } = "O La Pasta nasceu da paixão pela culinária italiana autêntica. Nossas receitas são passadas de geração em geração, combinando ingredientes frescos e técnicas tradicionais que fazem da nossa massa uma experiência única em Luanda.";
+    public string Description { get; set; } = "O La Pasta nasceu da paixão pela culinária autêntica. Nossas receitas são passadas de geração em geração, combinando ingredientes frescos e técnicas tradicionais que fazem da nossa massa uma experiência única em Luanda.";
 
     public string ContactLabel { get; set; } = "Reservas";
     public string PhoneNumber { get; set; } = "+244900000000";
