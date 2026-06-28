@@ -1,0 +1,256 @@
+@{
+    ViewData["Title"] = "Mesclar PDF";
+}
+
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold text-white">📑 Mesclar PDF</h1>
+        <p class="text-white-50">Combine múltiplos PDFs em um único arquivo</p>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-dark border-secondary">
+                <div class="card-body">
+                    <form asp-action="Merge" method="post" enctype="multipart/form-data" id="mergeForm">
+                        <!-- Área de Drag & Drop -->
+                        <div class="drop-zone" id="dropZone">
+                            <i class="fas fa-cloud-upload-alt fa-3x text-white-50 mb-3"></i>
+                            <p class="text-white-50">Arraste arquivos PDF aqui ou clique para adicionar</p>
+                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-plus me-2"></i>Adicionar arquivos
+                            </button>
+                            <input type="file" id="fileInput" class="d-none" accept=".pdf" multiple />
+                        </div>
+
+                        <!-- Lista de arquivos selecionados -->
+                        <div id="fileListContainer" style="display:none;" class="mt-3">
+                            <h5 class="text-white mb-2">📋 Arquivos selecionados:</h5>
+                            <ul class="list-group list-group-flush bg-transparent" id="fileList">
+                            </ul>
+                            <div class="text-center mt-2">
+                                <span class="text-white-50" id="fileCount">0 arquivos</span>
+                            </div>
+                        </div>
+
+                        <!-- Input hidden para enviar os arquivos -->
+                        <input type="file" name="Files" id="hiddenFileInput" class="d-none" multiple />
+
+                        <div class="mb-3 mt-3">
+                            <label class="form-label text-white">Nome do arquivo mesclado (opcional)</label>
+                            <input type="text" name="MergedFileName" class="form-control" placeholder="Ex: documento_unificado" />
+                            <small class="text-white-50">Deixe em branco para usar o nome padrão</small>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-danger" id="mergeBtn" disabled>
+                                <i class="fas fa-object-group me-2"></i>Mesclar PDFs
+                            </button>
+                            <div class="text-center mt-2">
+                                <span class="text-white-50" id="statusText">Adicione pelo menos 2 arquivos PDF</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .drop-zone {
+        border: 2px dashed rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 2rem 1rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.02);
+        cursor: pointer;
+    }
+
+    .drop-zone:hover {
+        border-color: rgba(229, 57, 53, 0.4);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .drop-zone.dragover {
+        border-color: #e53935;
+        background: rgba(229, 57, 53, 0.08);
+    }
+
+    .list-group-item {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-color: rgba(255, 255, 255, 0.05) !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    .list-group-item .remove-file {
+        color: #e53935;
+        cursor: pointer;
+        font-size: 0.9rem;
+        padding: 0 0.5rem;
+        transition: transform 0.2s ease;
+        background: none;
+        border: none;
+    }
+
+    .list-group-item .remove-file:hover {
+        transform: scale(1.2);
+    }
+
+    .file-size {
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 0.8rem;
+        margin-left: 0.5rem;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        let selectedFiles = [];
+
+        // ===== Elementos =====
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const hiddenFileInput = document.getElementById('hiddenFileInput');
+        const fileList = document.getElementById('fileList');
+        const fileListContainer = document.getElementById('fileListContainer');
+        const mergeBtn = document.getElementById('mergeBtn');
+        const fileCount = document.getElementById('fileCount');
+        const statusText = document.getElementById('statusText');
+
+        // ===== Drag & Drop =====
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            addFiles(files);
+        });
+
+        dropZone.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'BUTTON' && e.target.closest('button') === null) {
+                fileInput.click();
+            }
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            if (this.files.length > 0) {
+                addFiles(this.files);
+                this.value = '';
+            }
+        });
+
+        // ===== Adicionar arquivos =====
+        function addFiles(files) {
+            const validFiles = Array.from(files).filter(f => 
+                f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')
+            );
+
+            if (validFiles.length === 0) {
+                alert('Por favor, selecione apenas arquivos PDF.');
+                return;
+            }
+
+            // Verificar duplicatas
+            const existingNames = new Set(selectedFiles.map(f => f.name));
+            const newFiles = validFiles.filter(f => !existingNames.has(f.name));
+
+            if (newFiles.length === 0) {
+                alert('Estes arquivos já foram adicionados.');
+                return;
+            }
+
+            selectedFiles = [...selectedFiles, ...newFiles];
+            updateUI();
+        }
+
+        // ===== Remover arquivo =====
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            updateUI();
+        }
+
+        // ===== Atualizar UI =====
+        function updateUI() {
+            fileList.innerHTML = '';
+
+            if (selectedFiles.length > 0) {
+                fileListContainer.style.display = 'block';
+                fileCount.textContent = `${selectedFiles.length} arquivo(s)`;
+
+                selectedFiles.forEach((file, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+
+                    const leftDiv = document.createElement('div');
+                    const size = (file.size / 1024).toFixed(1);
+                    leftDiv.innerHTML = `${index + 1}. ${file.name} <span class="file-size">(${size} KB)</span>`;
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-file';
+                    removeBtn.innerHTML = '✕';
+                    removeBtn.onclick = function(e) {
+                        e.stopPropagation();
+                        removeFile(index);
+                    };
+
+                    li.appendChild(leftDiv);
+                    li.appendChild(removeBtn);
+                    fileList.appendChild(li);
+                });
+
+                // Habilitar botão se tiver 2+ arquivos
+                if (selectedFiles.length >= 2) {
+                    mergeBtn.disabled = false;
+                    statusText.textContent = `${selectedFiles.length} arquivos prontos para mesclar!`;
+                    statusText.className = 'text-success';
+                } else {
+                    mergeBtn.disabled = true;
+                    statusText.textContent = `Adicione mais ${2 - selectedFiles.length} arquivo(s) (mínimo 2)`;
+                    statusText.className = 'text-white-50';
+                }
+            } else {
+                fileListContainer.style.display = 'none';
+                mergeBtn.disabled = true;
+                statusText.textContent = 'Adicione pelo menos 2 arquivos PDF';
+                statusText.className = 'text-white-50';
+            }
+
+            // Atualizar o input hidden com os arquivos
+            updateHiddenInput();
+        }
+
+        // ===== Atualizar input hidden =====
+        function updateHiddenInput() {
+            const dt = new DataTransfer();
+            selectedFiles.forEach(file => dt.items.add(file));
+            hiddenFileInput.files = dt.files;
+        }
+
+        // ===== Inicializar =====
+        updateUI();
+    </script>
+}
