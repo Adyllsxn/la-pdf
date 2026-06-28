@@ -196,7 +196,7 @@ public class PdfService : IPdfService
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "/usr/bin/gs",
+                    FileName = "gs",  // ← Mudado de /usr/bin/gs para gs
                     Arguments = args,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -259,7 +259,7 @@ public class PdfService : IPdfService
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "/usr/bin/gs",
+                    FileName = "gs",  // ← Mudado de /usr/bin/gs para gs
                     Arguments = args,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -315,7 +315,7 @@ public class PdfService : IPdfService
                     {
                         StartInfo = new ProcessStartInfo
                         {
-                            FileName = "/usr/bin/gs",
+                            FileName = "gs",  // ← Mudado de /usr/bin/gs para gs
                             Arguments = args,
                             RedirectStandardOutput = true,
                             RedirectStandardError = true,
@@ -358,7 +358,7 @@ public class PdfService : IPdfService
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "/usr/bin/gs",
+                    FileName = "gs",  // ← Mudado de /usr/bin/gs para gs
                     Arguments = args,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -400,7 +400,7 @@ public class PdfService : IPdfService
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = "/usr/bin/gs",
+                        FileName = "gs",  // ← Mudado de /usr/bin/gs para gs
                         Arguments = args,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
@@ -442,7 +442,7 @@ public class PdfService : IPdfService
                 {
                     StartInfo = new ProcessStartInfo
                     {
-                        FileName = "/usr/bin/gs",
+                        FileName = "gs",  // ← Mudado de /usr/bin/gs para gs
                         Arguments = args,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
